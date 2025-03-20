@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew Haven </title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f0e8;
+            color: #5d4037;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #5d4037;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-style: italic;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        /* Menu Section */
+        .menu-section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            color: #5d4037;
+        }
+
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .category-btn {
+            background-color: transparent;
+            border: 2px solid #5d4037;
+            color: #5d4037;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover {
+            background-color: #5d4037;
+            color: #fff;
+        }
+
+        .category-btn.active {
+            background-color: #5d4037;
+            color: #fff;
+        }
+
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .menu-item {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .item-info {
+            padding: 20px;
+        }
+
+        .item-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .item-description {
+            color: #7d6e67;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .item-price {
+            font-weight: 700;
+            font-size: 18px;
+            color: #5d4037;
+            margin-bottom: 15px;
+        }
+
+        .item-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            background-color: #f0e9e1;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .quantity {
+            width: 30px;
+            text-align: center;
+            font-size: 16px;
+            margin: 0 8px;
+        }
+
+        .add-to-cart {
+            background-color: #5d4037;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: #4e342e;
+        }
+
+        /* Cart Section */
+        .cart-section {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .cart-item-info {
+            flex-grow: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: #5d4037;
+            font-size: 14px;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            margin: 0 20px;
+        }
+
+        .cart-item-remove {
+            color: #f44336;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .cart-summary {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            background-color: #5d4037;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #4e342e;
+        }
+
+        /* Order Confirmation */
+        .order-confirmation {
+            background-color: #8bc34a;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            padding: 20px;
+            color: #7d6e67;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-categories {
+                flex-wrap: wrap;
+            }
+            
+            .category-btn {
+                margin-bottom: 10px;
+            }
+            
+            .menu-items {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .item-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .quantity-control {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Brew Haven</h1>
+            <p class="tagline">Where every cup tells a story</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="menu-section">
+            <h2 class="section-title">Menu</h2>
+            
+            <div class="menu-categories">
+                <button class="category-btn active" data-category="all">All</button>
+                <button class="category-btn" data-category="hot">Hot Coffee</button>
+                <button class="category-btn" data-category="cold">Cold Coffee</button>
+                <button class="category-btn" data-category="specialty">Special</button>
+            </div>
+            
+            <div class="menu-items" id="menu-container">
+                <!-- Menu items will be dynamically added here -->
+            </div>
+        </section>
+
+        <section class="cart-section">
+            <h2 class="section-title">Your Order</h2>
+            
+            <div class="order-confirmation" id="order-confirmation">
+                Order placed successfully! Your coffee will be ready shortly.
+            </div>
+            
+            <div id="cart-items" class="cart-items">
+                <div class="empty-cart" id="empty-cart">
+                    Your cart is empty. Add some delicious coffee!
+                </div>
+                <!-- Cart items will be dynamically added here -->
+            </div>
+            
+            <div class="cart-summary" id="cart-summary">
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            
+            <button class="checkout-btn" id="checkout-btn">Place Order</button>
+        </section>
+    </div>
+
+    <script>
+        // Coffee menu data
+        const menuItems = [
+            {
+                id: 1,
+                name: "Espresso",
+                description: "Strong and concentrated coffee served in a small shot.",
+                price: 2.99,
+                category: "hot",
+                image: "C:\rashiga files\Coffee\Espresso.jpg"
+            },
+            {
+                id: 2,
+                name: "Cappuccino",
+                description: "Equal parts espresso, steamed milk, and milk foam.",
+                price: 4.50,
+                category: "hot",
+                image: "https://placeholder.com/400x300"
+            },
+            {
+                id: 3,
+                name: "Latte",
+                description: "Espresso with steamed milk and a light layer of foam.",
+                price: 4.75,
+                category: "hot",
+                image: "https://placeholder.com/400x300"
+            },
+            {
+                id: 4,
+                name: "Americano",
+                description: "Espresso diluted with hot water.",
+                price: 3.50,
+                category: "hot",
+                image: "https://placeholder.com/400x300"
+            },
+            {
+                id: 5,
+                name: "Mocha",
+                description: "Espresso with chocolate, steamed milk, and whipped cream.",
+                price: 5.25,
+                category: "hot",
+                image: "https://placeholder.com/400x300"
+            },
+            {
+                id: 6,
+                name: "Iced Coffee",
+                description: "Chilled coffee served over ice.",
+                price: 3.75,
+                category: "cold",
+                image: "https://placeholder.com/400x300"
+            },
+            {
+                id: 7,
+                name: "Cold Brew",
+                description: "Coffee steeped in cold water for 12-24 hours.",
+                price: 4.25,
+                category: "cold",
+                image: "https://placeholder.com/400x300"
+            },
+            {
+                id: 8,
+                name: "Frappuccino",
+                description: "Blended coffee with ice and milk, topped with whipped cream.",
+                price: 5.50,
+                category: "cold",
+                image: "https://placeholder.com/400x300"
+            },
+            {
+                id: 9,
+                name: "Affogato",
+                description: "Espresso poured over a scoop of vanilla ice cream.",
+                price: 5.75,
+                category: "specialty",
+                image: "https://placeholder.com/400x300"
+            },
+            {
+                id: 10,
+                name: "Caramel Macchiato",
+                description: "Vanilla-flavored espresso with caramel drizzle and steamed milk.",
+                price: 5.25,
+                category: "specialty",
+                image: "https://placeholder.com/400x300"
+            },
+            {
+                id: 11,
+                name: "Lavender Latte",
+                description: "Espresso with lavender-infused milk and a touch of honey.",
+                price: 5.95,
+                category: "specialty",
+                image: "https://placeholder.com/400x300"
+            },
+            {
+                id: 12,
+                name: "Vanilla Nitro Cold Brew",
+                description: "Nitrogen-infused cold brew with vanilla syrup.",
+                price: 5.50,
+                category: "cold",
+                image: "https://placeholder.com/400x300"
+            }
+        ];
+
+        // Cart array to store selected items
+        let cart = [];
+
+        // DOM elements
+        const menuContainer = document.getElementById('menu-container');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const orderConfirmation = document.getElementById('order-confirmation');
+        const emptyCartMessage = document.getElementById('empty-cart');
+
+        // Display menu items
+        function displayMenuItems(category = 'all') {
+            menuContainer.innerHTML = '';
+            
+            const filteredItems = category === 'all' 
+                ? menuItems 
+                : menuItems.filter(item => item.category === category);
+            
+            filteredItems.forEach(item => {
+                const menuItemElement = document.createElement('div');
+                menuItemElement.className = 'menu-item';
+                
+                menuItemElement.innerHTML = `
+                    <div class="item-image" style="background-image: url('/api/placeholder/400/300');"></div>
+                    <div class="item-info">
+                        <h3 class="item-title">${item.name}</h3>
+                        <p class="item-description">${item.description}</p>
+                        <p class="item-price">$${item.price.toFixed(2)}</p>
+                        <div class="item-actions">
+                            <div class="quantity-control">
+                                <button class="quantity-btn decrement" data-id="${item.id}">-</button>
+                                <span class="quantity" id="quantity-${item.id}">1</span>
+                                <button class="quantity-btn increment" data-id="${item.id}">+</button>
+                            </div>
+                            <button class="add-to-cart" data-id="${item.id}">Add to Order</button>
+                        </div>
+                    </div>
+                `;
+                
+                menuContainer.appendChild(menuItemElement);
+            });
+            
+            // Add event listeners to the newly created buttons
+            addMenuEventListeners();
+        }
+
+        // Add event listeners for menu items
+        function addMenuEventListeners() {
+            // Increment quantity
+            document.querySelectorAll('.increment').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    const quantityElement = document.getElementById(`quantity-${id}`);
+                    let quantity = parseInt(quantityElement.textContent);
+                    quantityElement.textContent = quantity + 1;
+                });
+            });
+            
+            // Decrement quantity
+            document.querySelectorAll('.decrement').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    const quantityElement = document.getElementById(`quantity-${id}`);
+                    let quantity = parseInt(quantityElement.textContent);
+                    if (quantity > 1) {
+                        quantityElement.textContent = quantity - 1;
+                    }
+                });
+            });
+            
+            // Add to cart
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.getAttribute('data-id'));
+                    const quantityElement = document.getElementById(`quantity-${id}`);
+                    const quantity = parseInt(quantityElement.textContent);
+                    
+                    addToCart(id, quantity);
+                    quantityElement.textContent = 1; // Reset quantity
+                });
+            });
+        }
+
+        // Add item to cart
+        function addToCart(itemId, quantity) {
+            const item = menuItems.find(item => item.id === itemId);
+            
+            if (!item) return;
+            
+            // Check if item already exists in cart
+            const existingItemIndex = cart.findIndex(cartItem => cartItem.id === itemId);
+            
+            if (existingItemIndex !== -1) {
+                // Item exists, update quantity
+                cart[existingItemIndex].quantity += quantity;
+            } else {
+                // Add new item to cart
+                cart.push({
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    quantity: quantity
+                });
+            }
+            
+            // Update cart display
+            updateCartDisplay();
+        }
+
+        // Update cart display
+        function updateCartDisplay() {
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                cartItemsContainer.innerHTML = '';
+                cartItemsContainer.appendChild(emptyCartMessage);
+            } else {
+                emptyCartMessage.style.display = 'none';
+                cartItemsContainer.innerHTML = '';
+                
+                cart.forEach(item => {
+                    const cartItemElement = document.createElement('div');
+                    cartItemElement.className = 'cart-item';
+                    
+                    cartItemElement.innerHTML = `
+                        <div class="cart-item-info">
+                            <h4 class="cart-item-title">${item.name}</h4>
+                            <p class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</p>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <span>${item.quantity}x</span>
+                        </div>
+                        <button class="cart-item-remove" data-id="${item.id}">&times;</button>
+                    `;
+                    
+                    cartItemsContainer.appendChild(cartItemElement);
+                });
+                
+                // Add event listeners to remove buttons
+                document.querySelectorAll('.cart-item-remove').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.getAttribute('data-id'));
+                        removeFromCart(id);
+                    });
+                });
+            }
+            
+            // Update total
+            updateCartTotal();
+        }
+
+        // Remove item from cart
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            updateCartDisplay();
+        }
+
+        // Update cart total
+        function updateCartTotal() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Handle checkout
+        function checkout() {
+            if (cart.length === 0) return;
+            
+            // Show confirmation message
+            orderConfirmation.style.display = 'block';
+            
+            // Clear cart
+            cart = [];
+            updateCartDisplay();
+            
+            // Hide confirmation after 5 seconds
+            setTimeout(() => {
+                orderConfirmation.style.display = 'none';
+            }, 5000);
+        }
+
+        // Event listeners for category buttons
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Display filtered menu items
+                const category = button.getAttribute('data-category');
+                displayMenuItems(category);
+            });
+        });
+
+        // Checkout button event listener
+        checkoutBtn.addEventListener('click', checkout);
+
+        // Initial display
+        displayMenuItems();
+    </script>
+</body>
+</html>
